@@ -28,7 +28,12 @@ import chatbot_pb2_grpc
 class Chatboter(chatbot_pb2_grpc.ChatboterServicer):
     def CheckHealth(self, request, context):
         return chatbot_pb2.HealthCheckResponse(message="I'm alive! %s!" % request.name)
+    
+    def TrainModel(self, request, context):
+        return chatbot_pb2.TrainModelResponse(message="Placeholder for training model", status=200)
 
+    def GetResponse(self, request, context):
+        return chatbot_pb2.GetResponseResponse(message="Placeholder for getting response", status=200)
 
 def serve():
     port = "50051"

@@ -30,7 +30,14 @@ def run():
     with grpc.insecure_channel("localhost:50051") as channel:
         stub = chatbot_pb2_grpc.ChatboterStub(channel)
         response = stub.CheckHealth(chatbot_pb2.HealthCheckRequest(name="you"))
-    print("Greeter client received: " + response.message)
+        print("Greeter client received: " + response.message)
+        response = stub.TrainModel(chatbot_pb2.TrainModelRequest(conversation=["you2"]))
+        print("Greeter client received: " + response.message + " " + str(response.status))
+        
+        # Call the GetResponse method 10 times with delay of 1 second
+        for i in range(10):
+            response = stub.GetResponse(chatbot_pb2.GetResponseRequest(message="Hello"))
+            print("Greeter client received: " + response.message + " " + str(response.status))
 
 
 if __name__ == "__main__":

@@ -5,7 +5,7 @@ import grpc
 import chatbot_pb2 as chatbot__pb2
 
 
-class GreeterStub(object):
+class ChatboterStub(object):
     """The greeting service definition.
     """
 
@@ -15,77 +15,76 @@ class GreeterStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.SayHello = channel.unary_unary(
-                '/helloworld.Greeter/SayHello',
-                request_serializer=chatbot__pb2.HelloRequest.SerializeToString,
-                response_deserializer=chatbot__pb2.HelloReply.FromString,
+        self.CheckHealth = channel.unary_unary(
+                '/chatbot.Chatboter/CheckHealth',
+                request_serializer=chatbot__pb2.HealthCheckRequest.SerializeToString,
+                response_deserializer=chatbot__pb2.HealthCheckResponse.FromString,
                 )
-        self.SayHelloStreamReply = channel.unary_stream(
-                '/helloworld.Greeter/SayHelloStreamReply',
-                request_serializer=chatbot__pb2.HelloRequest.SerializeToString,
-                response_deserializer=chatbot__pb2.HelloReply.FromString,
+        self.TrainModel = channel.unary_unary(
+                '/chatbot.Chatboter/TrainModel',
+                request_serializer=chatbot__pb2.TrainModelRequest.SerializeToString,
+                response_deserializer=chatbot__pb2.TrainModelResponse.FromString,
                 )
-        self.SayHelloBidiStream = channel.stream_stream(
-                '/helloworld.Greeter/SayHelloBidiStream',
-                request_serializer=chatbot__pb2.HelloRequest.SerializeToString,
-                response_deserializer=chatbot__pb2.HelloReply.FromString,
+        self.GetResponse = channel.unary_unary(
+                '/chatbot.Chatboter/GetResponse',
+                request_serializer=chatbot__pb2.GetResponseRequest.SerializeToString,
+                response_deserializer=chatbot__pb2.GetResponseResponse.FromString,
                 )
 
 
-class GreeterServicer(object):
+class ChatboterServicer(object):
     """The greeting service definition.
     """
 
-    def SayHello(self, request, context):
-        """Sends a greeting
-        """
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def SayHelloStreamReply(self, request, context):
+    def CheckHealth(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def SayHelloBidiStream(self, request_iterator, context):
+    def TrainModel(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetResponse(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_GreeterServicer_to_server(servicer, server):
+def add_ChatboterServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'SayHello': grpc.unary_unary_rpc_method_handler(
-                    servicer.SayHello,
-                    request_deserializer=chatbot__pb2.HelloRequest.FromString,
-                    response_serializer=chatbot__pb2.HelloReply.SerializeToString,
+            'CheckHealth': grpc.unary_unary_rpc_method_handler(
+                    servicer.CheckHealth,
+                    request_deserializer=chatbot__pb2.HealthCheckRequest.FromString,
+                    response_serializer=chatbot__pb2.HealthCheckResponse.SerializeToString,
             ),
-            'SayHelloStreamReply': grpc.unary_stream_rpc_method_handler(
-                    servicer.SayHelloStreamReply,
-                    request_deserializer=chatbot__pb2.HelloRequest.FromString,
-                    response_serializer=chatbot__pb2.HelloReply.SerializeToString,
+            'TrainModel': grpc.unary_unary_rpc_method_handler(
+                    servicer.TrainModel,
+                    request_deserializer=chatbot__pb2.TrainModelRequest.FromString,
+                    response_serializer=chatbot__pb2.TrainModelResponse.SerializeToString,
             ),
-            'SayHelloBidiStream': grpc.stream_stream_rpc_method_handler(
-                    servicer.SayHelloBidiStream,
-                    request_deserializer=chatbot__pb2.HelloRequest.FromString,
-                    response_serializer=chatbot__pb2.HelloReply.SerializeToString,
+            'GetResponse': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetResponse,
+                    request_deserializer=chatbot__pb2.GetResponseRequest.FromString,
+                    response_serializer=chatbot__pb2.GetResponseResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'helloworld.Greeter', rpc_method_handlers)
+            'chatbot.Chatboter', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class Greeter(object):
+class Chatboter(object):
     """The greeting service definition.
     """
 
     @staticmethod
-    def SayHello(request,
+    def CheckHealth(request,
             target,
             options=(),
             channel_credentials=None,
@@ -95,14 +94,14 @@ class Greeter(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/helloworld.Greeter/SayHello',
-            chatbot__pb2.HelloRequest.SerializeToString,
-            chatbot__pb2.HelloReply.FromString,
+        return grpc.experimental.unary_unary(request, target, '/chatbot.Chatboter/CheckHealth',
+            chatbot__pb2.HealthCheckRequest.SerializeToString,
+            chatbot__pb2.HealthCheckResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def SayHelloStreamReply(request,
+    def TrainModel(request,
             target,
             options=(),
             channel_credentials=None,
@@ -112,14 +111,14 @@ class Greeter(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/helloworld.Greeter/SayHelloStreamReply',
-            chatbot__pb2.HelloRequest.SerializeToString,
-            chatbot__pb2.HelloReply.FromString,
+        return grpc.experimental.unary_unary(request, target, '/chatbot.Chatboter/TrainModel',
+            chatbot__pb2.TrainModelRequest.SerializeToString,
+            chatbot__pb2.TrainModelResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def SayHelloBidiStream(request_iterator,
+    def GetResponse(request,
             target,
             options=(),
             channel_credentials=None,
@@ -129,8 +128,8 @@ class Greeter(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.stream_stream(request_iterator, target, '/helloworld.Greeter/SayHelloBidiStream',
-            chatbot__pb2.HelloRequest.SerializeToString,
-            chatbot__pb2.HelloReply.FromString,
+        return grpc.experimental.unary_unary(request, target, '/chatbot.Chatboter/GetResponse',
+            chatbot__pb2.GetResponseRequest.SerializeToString,
+            chatbot__pb2.GetResponseResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
