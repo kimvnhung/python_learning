@@ -28,8 +28,8 @@ def run():
     # of the code.
     print("Will try to greet world ...")
     with grpc.insecure_channel("localhost:50051") as channel:
-        stub = chatbot_pb2_grpc.GreeterStub(channel)
-        response = stub.SayHello(chatbot_pb2.HelloRequest(name="you"))
+        stub = chatbot_pb2_grpc.ChatboterStub(channel)
+        response = stub.CheckHealth(chatbot_pb2.HealthCheckRequest(name="you"))
     print("Greeter client received: " + response.message)
 
 

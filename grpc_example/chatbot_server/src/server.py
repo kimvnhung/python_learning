@@ -17,19 +17,23 @@ from concurrent import futures
 import logging
 
 import grpc
-import helloworld_pb2
-import helloworld_pb2_grpc
+import chatbot_pb2
+import chatbot_pb2_grpc
 
 
-class Greeter(helloworld_pb2_grpc.GreeterServicer):
-    def SayHello(self, request, context):
-        return helloworld_pb2.HelloReply(message="Hello, %s!" % request.name)
+# class Greeter(helloworld_pb2_grpc.GreeterServicer):
+#     def SayHello(self, request, context):
+#         return helloworld_pb2.HelloReply(message="Hello, %s!" % request.name)
+
+class Chatboter(chatbot_pb2_grpc.ChatboterServicer):
+    def CheckHealth(self, request, context):
+        return chatbot_pb2.HealthCheckResponse(message="I'm alive! %s!" % request.name)
 
 
 def serve():
     port = "50051"
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    helloworld_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
+    chatbot_pb2_grpc.add_ChatboterServicer_to_server(Chatboter(), server)
     server.add_insecure_port("[::]:" + port)
     server.start()
     print("Server started, listening on " + port)
